@@ -7,15 +7,11 @@ using UnityEngine.UI;
 public class SpawningBricks : MonoBehaviour {
 
     public GameObject [] bricks;
-    private float bottomY, topY;
     public GameObject bottom;
-    public float delay = 1f;
-    private float newResp = 0f;
-    private int i;
+    private int i,j;
     public Text LR , size;
-    private float sizeofBrick;
     [HideInInspector]
-    public float leftEdge, rightEdge;
+        public float leftEdge, rightEdge, bottomY, topY, sizeofBrick;
     void Awake()
     {
         leftEdge = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
@@ -32,16 +28,12 @@ public class SpawningBricks : MonoBehaviour {
     }
 
     void Update () {
-        if(Time.time > newResp)
+        GameObject resp = GameObject.FindWithTag("MovingBricks");
+        if (resp == null)
         {
-            newResp = Time.time + delay;
+            j = Random.Range(0, 3);
             i = Random.Range(0, 6);
-            if (i == 0)
-                Instantiate(bricks[i], new Vector3(leftEdge, topY + sizeofBrick, 0), Quaternion.identity);
-            else if(i==5)
-                Instantiate(bricks[i], new Vector3(rightEdge, topY + sizeofBrick, 0), Quaternion.identity);
-            else
-                Instantiate(bricks[i], new Vector3(leftEdge +sizeofBrick * (0.5f + i), topY + sizeofBrick, 0), Quaternion.identity);
+            Instantiate(bricks[j], new Vector3(leftEdge +sizeofBrick * (0.5f + i), topY + sizeofBrick, 0), Quaternion.identity);
         }
 	}
 }
